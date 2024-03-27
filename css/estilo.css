@@ -1,0 +1,93 @@
+.navbar{background-color: rgb(229, 98, 11);}
+
+.navbar-toggler{
+    border: 0;
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+.navbar-toggler:focus{
+    box-shadow: none;
+}
+
+.dropdown-menu{
+    background-color: rgb(229, 98, 11);
+    border-radius: 0;
+}
+
+.dropdown-menu[data-bs-popper] {
+    top: 3.59rem;
+}
+
+.dropdown-item:hover{
+    border-bottom:  white solid 2px;
+    background-color: transparent;
+}
+
+.boasvindas{
+    background-image: url(../imagens/jumbotrom-bg.png);
+    background-size: cover;
+    background-position: center;
+}
+
+.no-margin{
+   margin-left: -0.75rem;
+   margin-right: -0.75rem;
+}
+
+.service{
+    background-color: rgb(45, 36, 24);
+    border-top: 1rem solid rgb(63, 50, 33);
+    border-bottom: 1rem solid rgb(63, 50, 33);
+}
+
+.carousel-indicators [data-bs-target]{
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+}
+
+.scrollspy{
+    height: 20rem;
+    overflow: auto;
+}
+
+.ambiente{
+    background-image: url(../imagens/meio-ambiente.jpg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.img-fluid{
+    width: 100%;
+}
+
+.reciclagem{
+    background-image: url(../imagens/reciclagem01.jpg);
+    background-size: cover;
+}
+
+.rodape{
+    background-color: #231e18;
+    height: 5.5rem;
+}
+
+textarea{
+    resize: none;
+}
+
+.custom-tooltip{
+    --bs-tooltip-bg: var(--bs-orange);
+    --bs-tooltip-font-size: 1.15rem;
+    --bs-tooltip-color: #000;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.custom-popover{
+    --bs-popover-border-color: #333;
+    --bs-popover-header-bg:#ebad01;
+    --bs-popover-header-font-size:1.25rem;
+    --bs-popover-font-size:1rem;
+}
