@@ -16,7 +16,8 @@
 }
 
 .dropdown-menu[data-bs-popper] {
-    top: 3.59rem;
+    top: 2.8rem;
+    border: 0;
 }
 
 .dropdown-item:hover{
@@ -90,4 +91,47 @@ textarea{
     --bs-popover-header-bg:#ebad01;
     --bs-popover-header-font-size:1.25rem;
     --bs-popover-font-size:1rem;
+}
+
+.bg-glass-white{
+    background-color: rgba(255, 255, 255, 0.597);
+}
+
+.bg-glass-white-2{
+    background-color: rgba(255, 255, 255, 0.837);
+}
+
+.img-responsive{
+    height: 10%;
+}
+
+.animation-icons-ctt{
+    background-color: transparent;
+    border: 0px solid #000;
+    transition-duration: 0.1s;
+    padding: 4px;
+}
+
+.animation-icons-ctt:hover{
+    background-color: rgba(189, 189, 189, 0.093);
+    border-bottom: 5px solid #000;
+    border-radius: 10%;
+    transition-duration: 0.1s;
+}
+
+@keyframes animation1{
+    0%{
+        
+    }
+}
+
+.mapbox {
+    padding: 50px;
+    padding-top: 0px;
+}
+
+.mapbox iframe {
+    width: 100%;
+    height: 300px;
+    border-radius: 7px;
 }
