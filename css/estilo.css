@@ -70,8 +70,8 @@
 }
 
 .rodape{
-    background-color: #231e18;
-    height: 5.5rem;
+    background-color: #bb6700;
+    
 }
 
 textarea{
@@ -103,6 +103,16 @@ textarea{
 
 .img-responsive{
     height: 10%;
+}
+
+.footer-link{
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0);
+}
+
+.footer-item{
+    text-decoration: none;
+    color: rgb(255, 255, 255);
 }
 
 .animation-icons-ctt{
