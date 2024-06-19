@@ -19,7 +19,7 @@ fetch(FULL_URL)
 
             thData.innerText = `${data.table.rows[x].c[0].v}`
             thLink.innerText = `${data.table.rows[x].c[1].v}`
-            thLink.className = 'col-6'
+            thLink.className = 'col-1'
             thQuant.innerText = `${data.table.rows[x].c[2].v}`
             thQuant.className = 'col-1'
             if(data.table.rows[x].c[3].v == null){
@@ -27,7 +27,7 @@ fetch(FULL_URL)
             }else{
                 thStatus.innerText = `Pronto`;
             }
-            thStatus.className = 'col-4'
+            thStatus.className = 'col-1'
 
             //tr.append(thData)
             tr.append(thLink)
