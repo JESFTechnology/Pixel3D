@@ -1,3 +1,14 @@
+.bg-glass-white-1 {
+    background-color: rgba(227, 227, 227, 0.718);
+}
 .bg-glass-white-2 {
     background-color: rgba(227, 227, 227, 0.837);
+}
+.bg-glass-white-3 {
+    background-color: rgba(227, 227, 227, 0.934);
+}
+
+.img-print{
+    width: 200px;
+    height: 200px;
 }
