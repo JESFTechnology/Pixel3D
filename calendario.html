@@ -28,6 +28,7 @@
         background-size: contain;
         background-position: center;
     }
+
     .calendar {
         background-color: rgb(255, 255, 255);
         width: 356px;
@@ -38,7 +39,7 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    .aviso{
+    .aviso {
         margin-top: 40px;
     }
 
@@ -182,7 +183,7 @@
         </nav>
     </header>
     <h1 class="m-5 text-center">Calendário de trabalho</h1>
-    <div class="row bg-glass-white-2    ">
+    <div class="row bg-glass-white-2">
         <div class="calendar">
             <div class="header-2">
                 <button class="prev" onclick="prevMonth()">«</button>
@@ -218,9 +219,10 @@
                 <div class='date-2 bg-info-2 text-white-2'></div>
             </div>
         </div>
-        <div class="aviso mx-5">
-            <h3 class="text-center">Leia atentamente!</h3>
-            <p>Aviso</p>
+        <div class="aviso col-md-7">
+            <iframe
+                src="https://docs.google.com/forms/d/e/1FAIpQLSctlBTVD3NBrVsX2oHs2zPQJxHshFfks_k-hgmRCNDf1bLk8Q/viewform?embedded=true"
+                height="600" frameborder="0" marginheight="0" marginwidth="0" class="col-12">Carregando…</iframe>
         </div>
     </div>
 
@@ -243,30 +245,30 @@
 
         function renderCalendar() {
             fetch(FULL_URL)
-            .then(res => res.text())
-            .then(rep => {
-                let data = JSON.parse(rep.substr(47).slice(0, -2));
+                .then(res => res.text())
+                .then(rep => {
+                    let data = JSON.parse(rep.substr(47).slice(0, -2));
 
-                console.log("Google Online!");
+                    console.log("Google Online!");
 
-                const carousel_inner = document.getElementById('carousel_inner');
-                const carousel_indicators = document.getElementById('carousel_indicators');
+                    const carousel_inner = document.getElementById('carousel_inner');
+                    const carousel_indicators = document.getElementById('carousel_indicators');
 
-                let length = data.table.rows.length;
+                    let length = data.table.rows.length;
 
-                for (let x = 0; x < length; x++) {
-                    const texto = `${data.table.rows[x].c[0].v}`;
-                    const regex = /\((\d{4}),(\d{1,2}),(\d{1,2})\)/;
-                    const match = texto.match(regex);
-                    if (match) {
-                        const ano = match[1];
-                        const mes = match[2].padStart(2, '0');
-                        const dia = match[3].padStart(2, '0');
-                        const dataFormatada = `${ano}-${mes}-${dia}`;
-                        diasOcupados.push(dataFormatada)
+                    for (let x = 0; x < length; x++) {
+                        const texto = `${data.table.rows[x].c[0].v}`;
+                        const regex = /\((\d{4}),(\d{1,2}),(\d{1,2})\)/;
+                        const match = texto.match(regex);
+                        if (match) {
+                            const ano = match[1];
+                            const mes = match[2].padStart(2, '0');
+                            const dia = match[3].padStart(2, '0');
+                            const dataFormatada = `${ano}-${mes}-${dia}`;
+                            diasOcupados.push(dataFormatada)
+                        }
                     }
-                }
-            });
+                });
             const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
             const daysInMonth = getDaysInMonth(currentMonth, currentYear);
             const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
