@@ -35,27 +35,27 @@
     position: relative;
   }
 
-  .ag-courses_item:nth-child(1n) .ag-courses-item_link{
+  .col-md-4:nth-child(1n) .ag-courses_item .ag-courses-item_link{
     background-image: url('https://img.freepik.com/fotos-gratis/tecnologia-e-equipamentos-em-um-laboratorio-azul-gerado-por-ia_188544-19546.jpg');
     background-size: cover;
   }
-  .ag-courses_item:nth-child(2n) .ag-courses-item_link{
+  .col-md-4:nth-child(2n) .ag-courses_item .ag-courses-item_link{
     background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Schuifmaat_bottom_mechaniek.png/1200px-Schuifmaat_bottom_mechaniek.png');
     background-size: cover;
   }
-  .ag-courses_item:nth-child(3n) .ag-courses-item_link{
+  .col-md-4:nth-child(3n) .ag-courses_item .ag-courses-item_link{
     background-image: url('https://2.bp.blogspot.com/-RwI2Zj2oTs0/Wz9faHeeOVI/AAAAAAAAJl4/XweL6dFnBbgaeH9wpOuSVzmQ7pGyl1ViwCLcBGAs/s1600/IMG_8560.JPG');
     background-size: cover;
   }
-  .ag-courses_item:nth-child(4n) .ag-courses-item_link{
+  .col-md-4:nth-child(4n) .ag-courses_item .ag-courses-item_link{
     background-image: url('https://www.usinainfo.com.br/blog/wp-content/uploads/2015/12/Depositphotos_18514985_original.jpg');
     background-size: cover;
   }
-  .ag-courses_item:nth-child(5n) .ag-courses-item_link{
+  .col-md-4:nth-child(5n) .ag-courses_item .ag-courses-item_link{
     background-image: url('https://www.fs-pcba.com/wp-content/uploads/2022/07/bare-pcb-green.jpg');
     background-size: cover;
   }
-  .ag-courses_item:nth-child(6n) .ag-courses-item_link{
+  .col-md-4:nth-child(6n) .ag-courses_item .ag-courses-item_link{
     background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP5P_m4J4dYM6BAkyVSQ-95lCp5BfABKIGcQ&s');
     background-size: cover;
   }
@@ -114,22 +114,22 @@
     -o-transition: all .5s ease;
     transition: all .5s ease;
   }
-  .ag-courses_item:nth-child(2n) .ag-courses-item_bg {
+  .col-md-4:nth-child(2n) .ag-courses_item .ag-courses-item_bg {
     background-color: #00e231a1;
   }
-  .ag-courses_item:nth-child(3n) .ag-courses-item_bg {
+  .col-md-4:nth-child(3n) .ag-courses_item .ag-courses-item_bg {
     background-color: #11b5c4ac;
   }
-  .ag-courses_item:nth-child(4n) .ag-courses-item_bg {
+  .col-md-4:nth-child(4n) .ag-courses_item .ag-courses-item_bg {
     background-color: #be11c4b0;
   }
-  .ag-courses_item:nth-child(5n) .ag-courses-item_bg {
+  .col-md-4:nth-child(5n) .ag-courses_item .ag-courses-item_bg {
     background-color: #11c423ab;
   }
-  .ag-courses_item:nth-child(6n) .ag-courses-item_bg {
+  .col-md-4:nth-child(6n) .ag-courses_item .ag-courses-item_bg {
     background-color: #4c49eaae;
   }
-  .ag-courses_item:nth-child(7n) .ag-courses-item_bg {
+  .col-md-4:nth-child(7n) .ag-courses_item .ag-courses-item_bg {
     background-color: #686868b3;
   }
   
