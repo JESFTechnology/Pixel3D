@@ -1,0 +1,41 @@
+img{
+    width: 100px;
+    position: absolute;
+}
+
+body{
+    background-color: green;
+}
+
+.menu{
+    position: absolute;
+    display: flex;
+    width: 99%;
+    height: 50px;
+    background-color: white;
+}
+
+.menu-2{
+    position: absolute;
+    display: flex;
+    width: 250px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.363);
+}
+
+.menu-2 div{
+    border: 3.4px transparent solid;
+    width: 45px;
+    height: 45px;
+}
+
+.menu-2 div img{
+    width: 45px;
+    height: 45px;
+}
+
+.item-menu{
+    border: 3.4px black solid;
+    width: 45px;
+    height: 45px;
+}
