@@ -24,13 +24,17 @@ provider.addScope('');
 
 
 
-let tela = 0;
+let tela = 7;
 
 const menu = document.getElementById("menu");
 
 const image = document.getElementById("myImage");
 
 const life = document.getElementById("life");
+
+const alerta = document.getElementById("alert")
+alerta.style.opacity = 0
+const alert_text = document.getElementById("alert-text")
 
 life.style.left = window.innerWidth-300;
 
@@ -49,9 +53,6 @@ if(valorAleatorio1 < 300 || valorAleatorio1 > window.innerWidth-100){
     }
 }
 
-menu.style.opacity = 100
-image.style.opacity = 100
-
 //console.log(valorAleatorio2)
 
 //const lanterna = document.getElementById("lanterna");
@@ -63,7 +64,7 @@ image.style.opacity = 100
 
 const coord = [valorAleatorio1,valorAleatorio2]
 
-let yPos = 0;
+let yPos = 160;
 let xPos = 0;
 
 const nomeEstudante = document.getElementById("nomeEstudante")
@@ -87,32 +88,42 @@ function colocarPlayers(){
 
   onValue(dbRef, (snapshot) => {
     snapshot.forEach((childSnapshot) => {
+      const childData = childSnapshot.val();
+      if(tela == childData.tela){
       try{
         if(localStorage.getItem("uid") != childSnapshot.key){
           const childKey = childSnapshot.key;
-          const childData = childSnapshot.val();
-          console.log(childKey)
+          //console.log(childKey)
           const img = document.getElementById(childKey)
           img.style.position = "absolute" 
-          img.style.top = `${childData.y}px`;
+          img.style.top = `${childData.y+95}px`;
           img.style.left = `${childData.x}px`;
-          console.log(childData)
+          //console.log(childData)
         }
       }catch{
         if(localStorage.getItem("uid") != childSnapshot.key){
           const childKey = childSnapshot.key;
-          const childData = childSnapshot.val();
-          console.log(childKey)
+          //console.log(childKey)
           const img = document.createElement("img")
           img.id = childKey;
           img.src = "https://i.pinimg.com/originals/1c/04/48/1c0448350625530d3873a100248540d9.gif"
           img.style.position = "absolute" 
-          img.style.top = `${childData.y}px`;
+          img.style.top = `${childData.y+95}px`;
           img.style.left = `${childData.x}px`;
-          console.log(childData)
+          
+          //console.log(childData)
           mapa.append(img)
         }
       }
+    }else{
+      try{
+        if(localStorage.getItem("uid") != childSnapshot.key){
+          const childKey = childSnapshot.key;
+          const img = document.getElementById(childKey)
+          img.style.opacity = 0
+        }
+      }catch{}
+    }
     });
   });
   /*onValue(starCountRef, (snapshot) => {
@@ -127,10 +138,39 @@ function colocarPlayers(){
   });*/
 }
 
+function trocarTela(){
+  alert_text.textContent = ""
+  alerta.style.opacity = 0
+  if(tela == 1){
+
+  }if(tela == 2){
+    
+  }if(tela == 3){
+    
+  }if(tela == 4){
+    
+  }if(tela == 5){
+    
+  }if(tela == 6){
+    
+  }if(tela == 7){
+    mapa.style.backgroundImage = 'url(img/Laboratorio.png)'
+    alert("Saindo no Espaço Maker")
+  }
+  
+  if(tela == 17){
+    mapa.style.backgroundImage = 'url(img/Laboratorio-2.png)'
+    alert("Entrando no Espaço Maker")
+  }
+  localStorage.setItem("tela", tela)
+}
+
 function login(){
   //console.log(localStorage.getItem("uid"))
   if(localStorage.getItem("uid")){
     puxarCoord();
+    menu.style.opacity = 100
+    image.style.opacity = 100
     nomeEstudante.innerText = localStorage.getItem("diplayname");
     fotoEstudante.src = localStorage.getItem("photoURL");
   }else{
@@ -179,7 +219,7 @@ function login(){
     localStorage.setItem("emailVerified", user.emailVerified)
     localStorage.setItem("email", user.email)
     localStorage.setItem("photoURL", user.photoURL)
-    localStorage.setItem("photoPerso", "")
+    localStorage.setItem("tela", 7)
   }).catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
@@ -193,14 +233,16 @@ function login(){
   });
 }
 colocarPlayers()
+image.style.top = `${yPos}px`;
 }
 
 login()
 
-function atualizarCoord(userId, x, y) {
+function atualizarCoord(userId, x, y, tela) {
     set(ref(db, "users/"+userId), {
       x: x,
-      y: y
+      y: y,
+      tela: tela
     });
   
 }
@@ -216,8 +258,10 @@ window.addEventListener("keydown", function(event) {
     //console.log(event.shiftKey); // prints true if the Shift key is pressed
     switch (event.key) {
         case "w":
-          yPos -= 10;
-          image.style.top = `${yPos}px`;
+          if(yPos >= 160){
+            yPos -= 10;
+            image.style.top = `${yPos}px`;
+          }
           break;
         case "s":
           yPos += 10;
@@ -231,18 +275,47 @@ window.addEventListener("keydown", function(event) {
             xPos += 10;
             image.style.left = `${xPos}px`;
             break;
+        case "e":
+              if(xPos >= 600 && xPos <= 780 && yPos <= 190 && yPos >= 150 && tela == 7){
+                tela = 17
+                xPos = 50;
+                image.style.left = `${xPos}px`;
+                trocarTela()
+              }
+              else if(xPos >= 10 && xPos <= 60 && yPos <= 190 && yPos >= 150 && tela == 17){
+                tela = 7
+                xPos = 690;
+                image.style.left = `${xPos}px`;
+                trocarTela()
+              }
+              break;
       }
     if(tela == 0 && xPos >= larguraTela){
         xPos = 0
         image.style.left = `${xPos}px`;
     }
     //console.log(lanterna.style.opacity)
-    if(xPos >= coord[0]-30 && xPos <= coord[0]*1.1 && yPos >= coord[1]-150 && yPos <= coord[1]+100 && lanterna.style.opacity != 0){
+    /*if(xPos >= coord[0]-30 && xPos <= coord[0]*1.1 && yPos >= coord[1]-150 && yPos <= coord[1]+100 && lanterna.style.opacity != 0){
         this.alert("Você pegou uma lanterna!")
         lanterna.style.opacity = 0
-    }
+    }*/
+   if(xPos >= 600 && xPos <= 780 && yPos <= 190 && yPos >= 150 && (tela == 7)){
+    alert_text.textContent = "Aperte E para interagir."
+    alerta.style.opacity = 100
+   }
+   else if(xPos >= 10 && xPos <= 60 && yPos <= 190 && yPos >= 150 && (tela == 17)){
+    alert_text.textContent = "Aperte E para interagir."
+    alerta.style.opacity = 100
+   }else{
+    alert_text.textContent = ""
+    alerta.style.opacity = 0
+   }
 
-    atualizarCoord(this.localStorage.getItem("uid"), xPos, yPos);
+    atualizarCoord(this.localStorage.getItem("uid"), xPos, yPos, tela);
   }); 
 
 
+  if(localStorage.getItem("tela")){
+    tela = parseInt(localStorage.getItem("tela"));
+    trocarTela()
+  }
