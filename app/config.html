@@ -1,0 +1,87 @@
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Config</title>
+    </head>
+    <style>
+        body {
+            background-image: url("img/Laboratorio.png");
+            background-size: cover;
+        }
+
+        .form {
+            position: absolute;
+            text-align: center;
+            margin: 10%;
+            background-color: rgba(255, 255, 255, 0.812);
+            width: 200px;
+        }
+
+        select {
+            background-color: transparent;
+            border: 0;
+        }
+
+        option {
+            background-color: transparent;
+            border: 0;
+        }
+    </style>
+
+    <body>
+        <div class="form">
+            <label for="">Escolha o personagem:</label>
+            <select name="" id="mySelect">
+                <option value="Personagem.png">Personagem 1</option>
+                <option value="Darth_Vader-2.png">Darth Vader</option>
+                <option value="Sapo_Ninja-2.png">Sapo Ninja</option>
+            </select>
+            <br>
+            <button id="btn-salvar">Salvar</button>
+            <br>
+            <a href="index.html">Voltar ao inicio</a>
+        </div>
+
+        <script type="module">
+            // Adiciona evento de click ao botão Salvar
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+            import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+            const firebaseConfig = {
+                apiKey: "AIzaSyAKFHeOlxxbia66vTYJAdYKiJKO216BgvY",
+                authDomain: "game-online-ifmachado.firebaseapp.com",
+                projectId: "game-online-ifmachado",
+                storageBucket: "game-online-ifmachado.appspot.com",
+                messagingSenderId: "957180730749",
+                appId: "1:957180730749:web:7d40dc1fce8f0d01514014",
+                measurementId: "G-5WVDHQD2YS",
+                databaseURL: "https://game-online-ifmachado-default-rtdb.firebaseio.com/",
+            };
+            const app = initializeApp(firebaseConfig);
+            const db = getDatabase(app);
+            async function salvar() {
+                await set(ref(db, "users/" + localStorage.getItem("uid")), {
+                    x: 200,
+                    y: 180,
+                    tela: 7,
+                    img: localStorage.getItem("imgPerso")
+                });
+                window.location.href = "index.html";
+            }
+
+            const select = document.getElementById('mySelect');
+            select.addEventListener('change', function () {
+
+            });
+
+            document.getElementById('btn-salvar').addEventListener('click', function () {
+                const selectedValue = select.value;
+                const selectedText = select.options[select.selectedIndex].text;
+                localStorage.setItem("imgPerso", selectedValue)
+                salvar()
+            });
+        </script>
+    </body>
+
+    </html>
