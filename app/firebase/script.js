@@ -155,12 +155,10 @@ function trocarTela(){
     
   }if(tela == 7){
     mapa.style.backgroundImage = 'url(img/Laboratorio.png)'
-    alert("Saindo no Espaço Maker")
   }
   
   if(tela == 17){
     mapa.style.backgroundImage = 'url(img/Laboratorio-2.png)'
-    alert("Entrando no Espaço Maker")
   }
   localStorage.setItem("tela", tela)
   colocarPlayers()
