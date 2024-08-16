@@ -119,7 +119,7 @@ function colocarPlayers(){
           const img = document.getElementById(childKey)
           img.style.position = "absolute" 
           img.style.opacity = 100
-          img.style.top = `${childData.y+95}px`;
+          img.style.top = `${childData.y+200}px`;
           img.style.left = `${childData.x}px`;
           //console.log(childData)
         }
@@ -129,9 +129,17 @@ function colocarPlayers(){
           //console.log(childKey)
           const img = document.createElement("img")
           img.id = childKey;
-          img.src = "https://i.pinimg.com/originals/1c/04/48/1c0448350625530d3873a100248540d9.gif"
+          try{
+            if(childData.img){
+              img.src = childData.img
+            }else{
+              img.src = "https://i.pinimg.com/originals/1c/04/48/1c0448350625530d3873a100248540d9.gif"
+            } 
+          }catch{
+            img.src = "https://i.pinimg.com/originals/1c/04/48/1c0448350625530d3873a100248540d9.gif"
+          }
           img.style.position = "absolute" 
-          img.style.top = `${childData.y+95}px`;
+          img.style.top = `${childData.y+200}px`;
           img.style.left = `${childData.x}px`;
           
           //console.log(childData)
@@ -163,13 +171,13 @@ function colocarPlayers(){
         //console.log(childKey)
         const img = document.createElement("img")
         img.id = "myImage"
-        img.src = "Personagem.png"
+        img.src = childData.img
         img.style.position = "absolute" 
         yPos = childData.y;
         img.style.top = `${yPos}px`;
         xPos = childData.x;
         img.style.left = `${xPos}px`;
-        
+        localStorage.setItem("imgPerso", childData.img)
         //console.log(childData)
         mapa.append(img)
       }
@@ -240,24 +248,20 @@ colocarPlayers()
 
 login()
 
-function atualizarCoord(userId, x, y, tela) {
+function atualizarCoord(userId, x, y, tela, imgPerso) {
     set(ref(db, "users/"+userId), {
       x: x,
       y: y,
-      tela: tela
+      tela: tela,
+      img:imgPerso
     });
-  
+    localStorage.setItem("x",x)
+    localStorage.setItem("y",y)
 }
 
 window.addEventListener("keydown", function(event) {
     const larguraTela = window.innerWidth;
     const alturaTela = window.innerHeight;
-    //console.log(`Resolução da tela: ${larguraTela} x ${alturaTela}`);
-    //console.log(event.key); // prints the key value (e.g. "a", "Shift", "Enter", etc.)
-    //console.log(event.code); // prints the key code (e.g. "KeyA", "ShiftLeft", "Enter", etc.)
-    //console.log(event.altKey); // prints true if the Alt key is pressed
-    //console.log(event.ctrlKey); // prints true if the Ctrl key is pressed
-    //console.log(event.shiftKey); // prints true if the Shift key is pressed
     try{
     const image = this.document.getElementById("myImage")
     switch (event.key) {
@@ -315,7 +319,7 @@ window.addEventListener("keydown", function(event) {
     alerta.style.opacity = 0
    }
 
-    atualizarCoord(this.localStorage.getItem("uid"), xPos, yPos, tela);
+    atualizarCoord(this.localStorage.getItem("uid"), xPos, yPos, tela, this.localStorage.getItem("imgPerso"));
     }
     catch{
 
