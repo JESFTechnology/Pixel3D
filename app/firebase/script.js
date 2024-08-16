@@ -28,8 +28,6 @@ let tela = 7;
 
 const menu = document.getElementById("menu");
 
-const image = document.getElementById("myImage");
-
 const life = document.getElementById("life");
 
 const alerta = document.getElementById("alert")
@@ -39,7 +37,6 @@ const alert_text = document.getElementById("alert-text")
 life.style.left = window.innerWidth-300;
 
 menu.style.opacity = 0
-image.style.opacity = 0
 menu.style.top = `${window.innerHeight-70}px`;
 
 let valorAleatorio1 = Math.floor(Math.random() * window.innerWidth);
@@ -70,26 +67,51 @@ let xPos = 0;
 const nomeEstudante = document.getElementById("nomeEstudante")
 const fotoEstudante = document.getElementById("fotoEstudante")
 
-function puxarCoord(){
-  const starCountRef = ref(db, "users/"+localStorage.getItem("uid"));
-  onValue(starCountRef, (snapshot) => {
-    const data = snapshot.val();
-    yPos = data.y;
-    image.style.top = `${yPos}px`;
-    xPos = data.x;
-    image.style.left = `${xPos}px`;
-  });
-}
-
 const mapa = document.getElementById("mapa")
 
 function colocarPlayers(){
+  const dbRef2 = ref(db, 'itens');
+
+  onValue(dbRef2, (snapshot) => {
+    snapshot.forEach((childSnapshot) => {
+      const childData = childSnapshot.val();
+      if(tela == childData.tela){
+      try{
+          const childKey = childSnapshot.key;
+          //console.log(childKey)
+          const img = document.getElementById(childKey)
+          img.style.position = "absolute" 
+          img.style.opacity = 100
+          img.style.top = `${childData.y}px`;
+          img.style.left = `${childData.x}px`;
+          //console.log(childData)
+      }catch (e){
+          const childKey = childSnapshot.key;
+          const img = document.createElement("img")
+          img.id = childKey;
+          img.src = `${childData.img}`
+          img.style.width = "200px"
+          img.style.position = "absolute" 
+          img.style.top = `${childData.y}px`;
+          img.style.left = `${childData.x}px`;
+          mapa.append(img)
+      }
+    }else{
+      try{
+          const childKey = childSnapshot.key;
+          const img = document.getElementById(childKey)
+          img.style.opacity = 0
+      }catch{}
+    }
+    });
+  });
+
   const dbRef = ref(db, 'users');
 
   onValue(dbRef, (snapshot) => {
     snapshot.forEach((childSnapshot) => {
-      const childData = childSnapshot.val();
-      if(tela == childData.tela){
+    const childData = childSnapshot.val();
+    if(tela == childData.tela){
       try{
         if(localStorage.getItem("uid") != childSnapshot.key){
           const childKey = childSnapshot.key;
@@ -101,7 +123,7 @@ function colocarPlayers(){
           img.style.left = `${childData.x}px`;
           //console.log(childData)
         }
-      }catch{
+      }catch (e){
         if(localStorage.getItem("uid") != childSnapshot.key){
           const childKey = childSnapshot.key;
           //console.log(childKey)
@@ -125,18 +147,35 @@ function colocarPlayers(){
         }
       }catch{}
     }
+    try{
+      if(localStorage.getItem("uid") == childSnapshot.key){ 
+        const childKey = childSnapshot.key;
+        //console.log(childKey)
+        const img = document.getElementById("myImage")
+        img.style.position = "absolute" 
+        img.style.top = `${childData.y+95}px`;
+        img.style.left = `${childData.x}px`;
+        console.log(childData)
+      }
+    }catch (e){
+      if(localStorage.getItem("uid") == childSnapshot.key){
+        const childKey = childSnapshot.key;
+        //console.log(childKey)
+        const img = document.createElement("img")
+        img.id = "myImage"
+        img.src = "Personagem.png"
+        img.style.position = "absolute" 
+        yPos = childData.y;
+        img.style.top = `${yPos}px`;
+        xPos = childData.x;
+        img.style.left = `${xPos}px`;
+        
+        //console.log(childData)
+        mapa.append(img)
+      }
+    }
     });
   });
-  /*onValue(starCountRef, (snapshot) => {
-    const data = snapshot.val();
-    const img = document.getElementById(`${data.bot}`)
-    img.src = "https://i.pinimg.com/originals/1c/04/48/1c0448350625530d3873a100248540d9.gif"
-    img.style.position = "absolute" 
-    img.style.top = `${data.bot.y}px`;
-    img.style.left = `${data.bot.x}px`;
-    console.log(data.y)
-    mapa.append(img)
-  });*/
 }
 
 function trocarTela(){
@@ -168,9 +207,7 @@ function trocarTela(){
 function login(){
   //console.log(localStorage.getItem("uid"))
   if(localStorage.getItem("uid")){
-    puxarCoord();
     menu.style.opacity = 100
-    image.style.opacity = 100
     nomeEstudante.innerText = localStorage.getItem("diplayname");
     fotoEstudante.src = localStorage.getItem("photoURL");
   }else{
@@ -179,41 +216,7 @@ function login(){
     // This gives you a Google Access Token. You can use it to access the Google API.
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential.accessToken;
-    // The signed-in user info.
     const user = result.user;
-    //console.log(user.displayName);
-    //console.log(user);
-    /**
-     * {
-    "uid": "zyO3JHsM4fYhmA1OSEd6C8tt3m92",
-    "email": "johannsacconi@gmail.com",
-    "emailVerified": true,
-    "displayName": "Johann Estêvão Sacconi Ferreira",
-    "isAnonymous": false,
-    "photoURL": "https://lh3.googleusercontent.com/a/ACg8ocKbwVbq-6oScyADnChwjUPOnbHtXaW87TsXrJK5MJmBwYycCo6Fog=s96-c",
-    "providerData": [
-        {
-            "providerId": "google.com",
-            "uid": "101151461539726724371",
-            "displayName": "Johann Estêvão Sacconi Ferreira",
-            "email": "johannsacconi@gmail.com",
-            "phoneNumber": null,
-            "photoURL": "https://lh3.googleusercontent.com/a/ACg8ocKbwVbq-6oScyADnChwjUPOnbHtXaW87TsXrJK5MJmBwYycCo6Fog=s96-c"
-        }
-    ],
-    "stsTokenManager": {
-        "refreshToken": "AMf-vBwpgBr_5sYyIvh5_Ht-gsTi5OdbKQpmLRZZh5tS-mNS55I-4cVqrbPw5MMlVz_y28d4xGw6HPmnEI_aSNpqzw7A84vTkToa8q8p_pLhklf-UYmyByYzzdwaU2X5Fv6uFqBDQ6xl41j-8LVo1QSlRwLs4ceLKCONgkSBFwq-smMS1yGjE2AfYZFq3cBHkczn0DtBty5w0aaNZVnnPBKA6krXDzhimXLxHE9BCCacBoc45daERkurKq1br7PRmfKeiXilNirNEALW6ZE1khTKUV6mWgoHeHVtkXc9406FkZEVZ0xN7sjIbDeNK4UBt4kIRZ3o2K12afQZuZDM87jX7krhqocLkvfJdfrese1QFmjw7jWwNJ2CnyVCsgwFb4OVIUHYRRNFgd78foVciMEpW5ryxj4HxNL63ugX8Z1nwYabAACoo02fihrmALpM3dJ2kbyUBPm3HRn9Cyr3S_2JcjblOMb39TqHO_la_rBgwCyZbH4skdY",
-        "accessToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImNlMzcxNzMwZWY4NmViYTI5YTUyMTJkOWI5NmYzNjc1NTA0ZjYyYmMiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiSm9oYW5uIEVzdMOqdsOjbyBTYWNjb25pIEZlcnJlaXJhIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0tid1ZicS02b1NjeUFEbkNod2pVUE9uYkh0WGFXODdUc1hySks1TUptQndZeWNDbzZGb2c9czk2LWMiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZ2FtZS1vbmxpbmUtaWZtYWNoYWRvIiwiYXVkIjoiZ2FtZS1vbmxpbmUtaWZtYWNoYWRvIiwiYXV0aF90aW1lIjoxNzIzNzM2MzAyLCJ1c2VyX2lkIjoienlPM0pIc000ZllobUExT1NFZDZDOHR0M205MiIsInN1YiI6Inp5TzNKSHNNNGZZaG1BMU9TRWQ2Qzh0dDNtOTIiLCJpYXQiOjE3MjM3MzYzMDIsImV4cCI6MTcyMzczOTkwMiwiZW1haWwiOiJqb2hhbm5zYWNjb25pQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7Imdvb2dsZS5jb20iOlsiMTAxMTUxNDYxNTM5NzI2NzI0MzcxIl0sImVtYWlsIjpbImpvaGFubnNhY2NvbmlAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.dANwL7vbOhEoBTMmfnONQgeAsc3QqkR_46JIRhKoXPUfmTfSLMvZFRpcyU2rovhdAgj-OqC6SnGrooUzYfqYxulCgf-haZffyuci0wieDy-hWRCcp2QBdAMcvyoxqojGHF0gzM185eLV_-qmbqorIYX_3UPFzhyyhP-erpw6VA9CHJmQS0NoRy0S3jiQOE1QUtf0YokhBYhZACIieSRscAP7D21OoskqsV-f-kEmrTL_kO7Vv_qJ8OnqdwCjG1vUSJASUNglo7bJH0b5c_ewFHklGtNJKuqdilqTkMkg8RAz29JNFMVWLnbINsJVVq2knEKaGR1X7DazGbQxn8GseA",
-        "expirationTime": 1723739901889
-    },
-    "createdAt": "1723733797699",
-    "lastLoginAt": "1723736247909",
-    "apiKey": "AIzaSyAKFHeOlxxbia66vTYJAdYKiJKO216BgvY",
-    "appName": "[DEFAULT]"
-    }
-     */
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
     localStorage.setItem("uid", user.uid)
     localStorage.setItem("diplayname", user.displayName)
     localStorage.setItem("emailVerified", user.emailVerified)
@@ -233,7 +236,6 @@ function login(){
   });
 }
 colocarPlayers()
-image.style.top = `${yPos}px`;
 }
 
 login()
@@ -256,9 +258,11 @@ window.addEventListener("keydown", function(event) {
     //console.log(event.altKey); // prints true if the Alt key is pressed
     //console.log(event.ctrlKey); // prints true if the Ctrl key is pressed
     //console.log(event.shiftKey); // prints true if the Shift key is pressed
+    try{
+    const image = this.document.getElementById("myImage")
     switch (event.key) {
         case "w":
-          if(yPos >= 160){
+          if(yPos >= 40){
             yPos -= 10;
             image.style.top = `${yPos}px`;
           }
@@ -276,13 +280,13 @@ window.addEventListener("keydown", function(event) {
             image.style.left = `${xPos}px`;
             break;
         case "e":
-              if(xPos >= 600 && xPos <= 780 && yPos <= 190 && yPos >= 150 && tela == 7){
+          if(xPos >= 600 && xPos <= 780 && yPos <= 190 && yPos >= 4 && (tela == 7)){
                 tela = 17
                 xPos = 50;
                 image.style.left = `${xPos}px`;
                 trocarTela()
               }
-              else if(xPos >= 10 && xPos <= 60 && yPos <= 190 && yPos >= 150 && tela == 17){
+              else if(xPos >= 10 && xPos <= 60 && yPos <= 100 && yPos >= 0 && (tela == 17)){
                 tela = 7
                 xPos = 690;
                 image.style.left = `${xPos}px`;
@@ -299,11 +303,11 @@ window.addEventListener("keydown", function(event) {
         this.alert("Você pegou uma lanterna!")
         lanterna.style.opacity = 0
     }*/
-   if(xPos >= 600 && xPos <= 780 && yPos <= 190 && yPos >= 150 && (tela == 7)){
+   if(xPos >= 600 && xPos <= 780 && yPos <= 190 && yPos >= 4 && (tela == 7)){
     alert_text.textContent = "Aperte E para interagir."
     alerta.style.opacity = 100
    }
-   else if(xPos >= 10 && xPos <= 60 && yPos <= 190 && yPos >= 150 && (tela == 17)){
+   else if(xPos >= 10 && xPos <= 60 && yPos <= 100 && yPos >= 0 && (tela == 17)){
     alert_text.textContent = "Aperte E para interagir."
     alerta.style.opacity = 100
    }else{
@@ -312,6 +316,10 @@ window.addEventListener("keydown", function(event) {
    }
 
     atualizarCoord(this.localStorage.getItem("uid"), xPos, yPos, tela);
+    }
+    catch{
+
+    }
   }); 
 
 
