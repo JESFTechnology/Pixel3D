@@ -130,7 +130,7 @@ function colocarPlayers(){
           const img = document.createElement("img")
           img.id = childKey;
           try{
-            if(childData.img){
+            if(childData.img == null || childData.img=="undefined"){
               img.src = childData.img
             }else{
               img.src = "https://i.pinimg.com/originals/1c/04/48/1c0448350625530d3873a100248540d9.gif"
