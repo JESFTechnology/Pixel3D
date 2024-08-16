@@ -96,6 +96,7 @@ function colocarPlayers(){
           //console.log(childKey)
           const img = document.getElementById(childKey)
           img.style.position = "absolute" 
+          img.style.opacity = 100
           img.style.top = `${childData.y+95}px`;
           img.style.left = `${childData.x}px`;
           //console.log(childData)
