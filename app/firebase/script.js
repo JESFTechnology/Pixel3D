@@ -121,6 +121,15 @@ function colocarPlayers(){
           img.style.opacity = 100
           img.style.top = `${childData.y+200}px`;
           img.style.left = `${childData.x}px`;
+          try{
+            if(childData.img != null || childData.img!="undefined"){
+              img.src = childData.img
+            }else{
+              img.src = "https://i.pinimg.com/originals/1c/04/48/1c0448350625530d3873a100248540d9.gif"
+            } 
+          }catch{
+            img.src = "https://i.pinimg.com/originals/1c/04/48/1c0448350625530d3873a100248540d9.gif"
+          }
           //console.log(childData)
         }
       }catch (e){
