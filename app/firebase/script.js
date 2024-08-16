@@ -163,6 +163,7 @@ function trocarTela(){
     alert("Entrando no Espaço Maker")
   }
   localStorage.setItem("tela", tela)
+  colocarPlayers()
 }
 
 function login(){
