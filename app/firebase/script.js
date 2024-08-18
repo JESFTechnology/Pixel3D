@@ -22,8 +22,6 @@ const db = getDatabase(app);
 auth.languageCode = 'pt';
 provider.addScope('');
 
-
-
 let tela = 7;
 
 const menu = document.getElementById("menu");
@@ -172,7 +170,7 @@ function colocarPlayers(){
         img.style.position = "absolute" 
         img.style.top = `${childData.y+95}px`;
         img.style.left = `${childData.x}px`;
-        console.log(childData)
+        //console.log(childData)
       }
     }catch (e){
       if(localStorage.getItem("uid") == childSnapshot.key){
@@ -212,9 +210,15 @@ function trocarTela(){
     
   }if(tela == 7){
     mapa.style.backgroundImage = 'url(img/Laboratorio.png)'
+  }if(tela == 8){
+    mapa.style.backgroundImage = 'url(img/Laboratorio-3.png)'
   }
   
   if(tela == 17){
+    mapa.style.backgroundImage = 'url(img/Laboratorio-2.png)'
+  }
+
+  if(tela == 18){
     mapa.style.backgroundImage = 'url(img/Laboratorio-2.png)'
   }
   localStorage.setItem("tela", tela)
@@ -240,6 +244,7 @@ function login(){
     localStorage.setItem("email", user.email)
     localStorage.setItem("photoURL", user.photoURL)
     localStorage.setItem("tela", 7)
+    window.location.href = "config.html";
   }).catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
@@ -268,28 +273,46 @@ function atualizarCoord(userId, x, y, tela, imgPerso) {
     localStorage.setItem("y",y)
 }
 
+let corrida = false
+
+let corrida_val = 10
+
 window.addEventListener("keydown", function(event) {
     const larguraTela = window.innerWidth;
     const alturaTela = window.innerHeight;
     try{
     const image = this.document.getElementById("myImage")
+    if(event.shiftKey == true){
+      if(corrida == true){
+        corrida = false
+        this.alert("Corrida Desativada!")
+        corrida_val = 10
+      }else{
+        corrida = true
+        this.alert("Corrida ATIVADA!")
+        corrida_val = 20
+      }
+    }
+    //console.log(event.key)
     switch (event.key) {
         case "w":
           if(yPos >= 40){
-            yPos -= 10;
+            yPos -= corrida_val;
             image.style.top = `${yPos}px`;
           }
           break;
         case "s":
-          yPos += 10;
+          if(yPos < 350)
+          {yPos += corrida_val;
           image.style.top = `${yPos}px`;
+          }
           break;
         case "a":
-            xPos -= 10;
+            xPos -= corrida_val;
             image.style.left = `${xPos}px`;
             break;
         case "d":
-            xPos += 10;
+            xPos += corrida_val;
             image.style.left = `${xPos}px`;
             break;
         case "e":
@@ -304,12 +327,34 @@ window.addEventListener("keydown", function(event) {
                 xPos = 690;
                 image.style.left = `${xPos}px`;
                 trocarTela()
+              }else if(xPos >= 1000 && xPos <= 1160 && yPos <= 100 && yPos >= 0 && (tela == 8)){
+                tela = 18;
+                xPos = 60;
+                yPos = 30;
+                image.style.left = `${xPos}px`;
+                image.style.top = `${yPos}px`;
+                trocarTela()
+               }else if(xPos >= 10 && xPos <= 60 && yPos <= 100 && yPos >= 0 && (tela == 18)){
+                tela = 8
+                xPos = 1080;
+                yPos = 70;
+                image.style.left = `${xPos}px`;
+                image.style.top = `${yPos}px`;
+                trocarTela()
               }
               break;
       }
-    if(tela == 0 && xPos >= larguraTela){
-        xPos = 0
+    if(tela == 7 && xPos >= larguraTela-60){
+        xPos = 10
+        tela = 8
         image.style.left = `${xPos}px`;
+        trocarTela()
+    }
+    if(tela == 8 && xPos < 3){
+      xPos = larguraTela-70
+      tela = 7
+      image.style.left = `${xPos}px`;
+      trocarTela()
     }
     //console.log(lanterna.style.opacity)
     /*if(xPos >= coord[0]-30 && xPos <= coord[0]*1.1 && yPos >= coord[1]-150 && yPos <= coord[1]+100 && lanterna.style.opacity != 0){
@@ -317,11 +362,17 @@ window.addEventListener("keydown", function(event) {
         lanterna.style.opacity = 0
     }*/
    if(xPos >= 600 && xPos <= 780 && yPos <= 190 && yPos >= 4 && (tela == 7)){
-    alert_text.textContent = "Aperte E para interagir."
+    alert_text.textContent = "Aperte E para entrar."
     alerta.style.opacity = 100
    }
    else if(xPos >= 10 && xPos <= 60 && yPos <= 100 && yPos >= 0 && (tela == 17)){
-    alert_text.textContent = "Aperte E para interagir."
+    alert_text.textContent = "Aperte E para sair."
+    alerta.style.opacity = 100
+   }else if(xPos >= 1000 && xPos <= 1160 && yPos <= 100 && yPos >= 0 && (tela == 8)){
+    alert_text.textContent = "Aperte E para entrar."
+    alerta.style.opacity = 100
+   }else if(xPos >= 10 && xPos <= 60 && yPos <= 100 && yPos >= 0 && (tela == 18)){
+    alert_text.textContent = "Aperte E para sair."
     alerta.style.opacity = 100
    }else{
     alert_text.textContent = ""
