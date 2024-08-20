@@ -63,7 +63,7 @@ function tirarDoChao(nome){
 }
 
 function addInventario(id, nome, img){
-  console.log("Colocando itens...")
+  //console.log("Colocando itens...")
   if(id == 0){
     id = inventario.length+1
     //alert(inventario.length+1)
@@ -91,7 +91,7 @@ function updateInventario(){
 }
 
 function largarInventario(valor){
-  console.log("Limpando inventario")
+  //console.log("Limpando inventario")
     set(ref(db, "itens/"+inventario[valor-1].nome), {
       x: (parseInt(localStorage.getItem("x"))+35),
       y: (parseInt(localStorage.getItem("y"))+240),
@@ -104,7 +104,22 @@ function largarInventario(valor){
     if (index !== -1) {
       inventario.splice(index, 1);
     } else {
-      console.log(`Slot ${3} está vazio`);
+      console.log(`Slot ${valor} está vazio`);
+    }
+    for(let i = 1; i <= 5; i++){
+      if(i <= inventario.length){
+      set(ref(db, `inventario/${localStorage.getItem("uid")}/${valor}`), {
+        x: (parseInt(localStorage.getItem("x"))+35),
+        y: (parseInt(localStorage.getItem("y"))+240),
+        img: inventario[valor-1].img,
+        tela: tela,
+        class: "item_de_mao"
+      });
+      }else{
+        try{
+          remove(ref(db, `inventario/${localStorage.getItem("uid")}/${i}`))
+        }catch{}
+      }
     }
     updateInventario()
 }
